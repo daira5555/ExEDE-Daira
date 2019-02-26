@@ -25,6 +25,12 @@ import org.neodatis.odb.core.query.criteria.Where;
 import org.neodatis.odb.impl.core.query.criteria.CriteriaQuery;
 import javax.swing.SwingConstants;
 
+/**
+ * @author 1dam
+ * @version 1, 2019
+ * <h2> esta clase se encarga del mantenimiento de datos de departamento,
+ * se realizan altas, bajas, modificaciones y consultas  </h2>
+ */
 @SuppressWarnings("serial")
 public class OperacionesDepart extends JDialog implements interfazDepart {
 	private static final String BBDD="Empleados.dat";

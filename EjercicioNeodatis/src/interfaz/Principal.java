@@ -14,6 +14,10 @@ import java.awt.Color;
 import javax.swing.border.LineBorder;
 import javax.swing.SwingConstants;
 
+/**
+ * @author Daira
+ * @version 1, 2019
+ */
 @SuppressWarnings("serial")
 public class Principal extends JFrame {
 	private JPanel contentPane;
@@ -52,7 +56,8 @@ public class Principal extends JFrame {
 		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 17));
 		lblTitulo.setBounds(69, 32, 287, 37);
 		contentPane.add(lblTitulo);
-
+		
+		
 		JButton btnEmple = new JButton("Operaciones Empleados");
 		btnEmple.setBounds(116, 98, 202, 23);
 		contentPane.add(btnEmple);
@@ -63,6 +68,7 @@ public class Principal extends JFrame {
 			}
 		});
 
+		
 		JButton btnDepart = new JButton("Operaciones Departamentos");
 		btnDepart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -73,7 +79,7 @@ public class Principal extends JFrame {
 		btnDepart.setBounds(116, 139, 202, 23);
 		contentPane.add(btnDepart);
 		
-		
+	
 		JButton btnConsultas = new JButton("Consultas a la BD");
 		btnConsultas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
