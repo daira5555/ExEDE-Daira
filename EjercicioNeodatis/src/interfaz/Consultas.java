@@ -30,83 +30,79 @@ import javax.swing.border.CompoundBorder;
 @SuppressWarnings("serial")
 public class Consultas extends JDialog implements ActionListener  {
 
-	private final JPanel contentPane;
-	private JLabel lblResultado;
-	JButton btnDepar = new JButton("Ver departamentos");
-	JButton btnEmple = new JButton("Ver empleados");
-	JButton btnEstadDepar = new JButton("Estadisticas departamentos");
-	JButton btnEstadEmple = new JButton("Estadisticas empleados");
+	ConsultasData Etiqueta = new ConsultasData(new JButton("Ver departamentos"), new JButton("Ver empleados"), new JButton("Estadisticas departamentos"), new JButton("Estadisticas empleados"));
 	private ODB odb =null;
+	private String bBDD;
 	
 	public Consultas() {
 		setTitle("CONSULTAS A LA BD");
 		setModal(true);
 		setBounds(100, 100, 450, 340);
-		contentPane = new JPanel();
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		Etiqueta.contentPane = new JPanel();
+		setContentPane(Etiqueta.contentPane);
+		Etiqueta.contentPane.setLayout(null);
 		
 		JLabel label_1 = new JLabel("CONSULTAS A LA BBDD");
 		label_1.setForeground(Color.BLUE);
 		label_1.setFont(new Font("Sylfaen", Font.BOLD, 15));
 		label_1.setBounds(112, 24, 217, 32);
-		contentPane.add(label_1);
+		Etiqueta.contentPane.add(label_1);
 		
 	
-		btnDepar.setBounds(111, 92, 218, 23);
-		contentPane.add(btnDepar);
+		Etiqueta.btnDepar.setBounds(111, 92, 218, 23);
+		Etiqueta.contentPane.add(Etiqueta.btnDepar);
 		
 
-		btnEmple.setBounds(111, 128, 218, 23);
-		contentPane.add(btnEmple);
+		Etiqueta.btnEmple.setBounds(111, 128, 218, 23);
+		Etiqueta.contentPane.add(Etiqueta.btnEmple);
 		
 	
-		btnEstadDepar.setBounds(111, 164, 218, 23);
-		contentPane.add(btnEstadDepar);
+		Etiqueta.btnEstadDepar.setBounds(111, 164, 218, 23);
+		Etiqueta.contentPane.add(Etiqueta.btnEstadDepar);
 		
 	
-		btnEstadEmple.setBounds(111, 200, 218, 23);
-		contentPane.add(btnEstadEmple);
+		Etiqueta.btnEstadEmple.setBounds(111, 200, 218, 23);
+		Etiqueta.contentPane.add(Etiqueta.btnEstadEmple);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new CompoundBorder());
 		panel.setBackground(Color.GREEN);
 		panel.setBounds(60, 67, 314, 181);
-		contentPane.add(panel);
+		Etiqueta.contentPane.add(panel);
 		
-		lblResultado = new JLabel("---------------------------------------------------------------------");
-		lblResultado.setForeground(Color.RED);
-		lblResultado.setFont(new Font("Dialog", Font.BOLD, 14));
-		lblResultado.setBounds(44, 272, 345, 14);
-		contentPane.add(lblResultado);
+		Etiqueta.lblResultado = new JLabel("---------------------------------------------------------------------");
+		Etiqueta.lblResultado.setForeground(Color.RED);
+		Etiqueta.lblResultado.setFont(new Font("Dialog", Font.BOLD, 14));
+		Etiqueta.lblResultado.setBounds(44, 272, 345, 14);
+		Etiqueta.contentPane.add(Etiqueta.lblResultado);
 		
 		
-		btnDepar.addActionListener(this);
-		btnEmple.addActionListener(this);
-		btnEstadDepar.addActionListener(this);
-		btnEstadEmple.addActionListener(this);
+		Etiqueta.btnDepar.addActionListener(this);
+		Etiqueta.btnEmple.addActionListener(this);
+		Etiqueta.btnEstadDepar.addActionListener(this);
+		Etiqueta.btnEstadEmple.addActionListener(this);
 	
 	}	
 
 public void actionPerformed(ActionEvent e) 
 {   
 	
-	String BBDD="Empleados.dat";
-	odb = ODBFactory.open(BBDD);
+	bBDD = "Empleados.dat";
+	odb = ODBFactory.open(bBDD);
 	
-    if (e.getSource() == btnDepar) { consuldepart();  	}
+    if (e.getSource() == Etiqueta.btnDepar) { consuldepart(0, 0);  	}
 	
-	if (e.getSource() == btnEmple) { consulemple();  	}
+	if (e.getSource() == Etiqueta.btnEmple) { consulemple();  	}
 	
-	if (e.getSource() == btnEstadDepar) { estadisdepart();  	}
+	if (e.getSource() == Etiqueta.btnEstadDepar) { estadisdepart();  	}
 	
-	if (e.getSource() == btnEstadEmple) { estadisemple();  	}
+	if (e.getSource() == Etiqueta.btnEstadEmple) { estadisemple();  	}
 	
 }		
 	
 /////////////////////////////////////////////////////////////////
 
-public void consuldepart() {
+public String consuldepart(int param1, int param2) {
 				IQuery query=new CriteriaQuery(Departamento.class);
 				query.orderByAsc("dept_no");
 				Objects<Departamento> depar=odb.getObjects(query);
@@ -134,16 +130,17 @@ public void consuldepart() {
 							
 							System.out.println(salida);
 						}
-						lblResultado.setText("Hay "+cont+" departamentos");
+						Etiqueta.lblResultado.setText("Hay "+cont+" departamentos");
 					}
 				}
 				else{
 					String error = "No existen datos de departamentos";
 					System.out.println(error);
-					lblResultado.setText(error);
+					Etiqueta.lblResultado.setText(error);
 				}
 				System.out.println("-----------------------------------------------------------------------------");
 				odb.close();
+				return bBDD;
 			}
 ///////////////////////////////////////////////////////////////
 public void consulemple() {		
@@ -169,12 +166,12 @@ public void consulemple() {
 							salida+=String.format("%30s", "No tiene departamento asociado");
 						System.out.println(salida);
 					}
-					lblResultado.setText("Hay "+cont+" empleados");
+					Etiqueta.lblResultado.setText("Hay "+cont+" empleados");
 				}
 				else{
 					String error = "No existen datos de empleados";
 					System.out.println(error);
-					lblResultado.setText(error);
+					Etiqueta.lblResultado.setText(error);
 				}
 				System.out.println("-------------------------------------------------------------------------------------------------------\n");
 				odb.close();
@@ -209,12 +206,12 @@ public void estadisdepart() {
 				if(nombre!=null) {
 					System.out.println("El departamento con mas empleados es: "+nombre+" con "+max+" empleados");
 					System.out.println("El departamento con mas media de salario es: "+nombreSal+" con "+maxSal+"€");
-					lblResultado.setText("Estadisticas de departamentos mostradas");
+					Etiqueta.lblResultado.setText("Estadisticas de departamentos mostradas");
 				}
 				else{
 					String error = "No hay estadisticas de departamentos";
 					System.out.println(error);
-					lblResultado.setText(error);
+					Etiqueta.lblResultado.setText(error);
 				}
 				
 				System.out.println("-----------------------------------------------\n");
@@ -248,12 +245,12 @@ public void estadisdepart() {
 						String datos=String.format("%15s  %10s", o3.getByIndex(1), o3.getByIndex(0));
 						System.out.println(datos);
 					}
-					lblResultado.setText("Estadisticas de empleados mostradas");
+					Etiqueta.lblResultado.setText("Estadisticas de empleados mostradas");
 				}
 				else{
 					String error = "No hay empleados";
 					System.out.println(error);
-					lblResultado.setText(error);
+					Etiqueta.lblResultado.setText(error);
 				}
 				System.out.println("---------------------------\n");
 				odb.close();
